@@ -1,0 +1,63 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --main-color-1: #fef3c7;
+    --main-color-2: #ce7646;
+    /* --main-color-3: #ce7646; */
+}
+
+body {
+    background-color: var(--main-color-1, brown);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+}
+
+.header {
+    background-color: var(--main-color-2, lightyellow);
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 15vw;
+    box-shadow: 1px 1px 6px;
+}
+
+.header > button {
+    background-color: var(--main-color-1, lightyellow);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+}
+
+.main {
+    padding: 1rem 15vw;
+    flex:1;
+    
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 200px);
+    grid-template-rows: repeat(auto-fit, 200px);
+    gap: 1rem;
+}
+
+.card {
+    min-height: 200px;
+    min-width: 200px;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.footer {
+    background-color: var(--main-color-2, brown);
+    text-align: center;
+    padding: 0.5rem;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
