@@ -10,13 +10,32 @@
     <div class="header">
         <h1>Library</h1>
         <button class="login-button">Log In</button>
+       
     </div>
     <div class="main">
         <div class="add-book-button-container">
             <button class="add-book-button">+ Add Book</button>
+            <form>
+                <fieldset>
+                    <legend>Add Book</legend>
+                    <ul>
+                        <li><label for="title">Title</label></li>
+                        <li><input type="text" id="title" required></li>
+                        <li><label for="author">Author</label></li>
+                        <li><input type="text" id="author" required></li>
+                        <li><label for="number">Pages</label></li>
+                        <li><input type="number" min="0" id="number" required></li>
+                        <li>
+                            <label for="read">Read it yet?</label>
+                            <input type="checkbox" id="read">
+                        </li>
+                        <li><button class="submit-button">Add book</button></li>
+                    </ul>
+                </fieldset>
+            </form>
         </div>
         <div class="grid-container">
-        
+            
      </div>
     </div>
     <div class="footer">
