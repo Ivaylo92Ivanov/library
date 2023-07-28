@@ -13,8 +13,8 @@ function Book(title, author, pages, read) {
             return "unread";
         };
     };
-};
 
+};
 
 function getFormInfo() {
     let title = document.querySelector("#title").value;
@@ -39,7 +39,29 @@ function addBookToLibrary(){
     myLibrary.push(new Book (title, author, pages, read));
     displayBooksToGrid();
     deleteButtons = assignDeleteButtonsToIndex();
+    readButtons = assignReadButtonsToIndex();
     return;
+};
+
+function displayBookAsCard(book) {
+    let newCard = document.createElement("div");
+    newCard.setAttribute("data-index", myLibrary.indexOf(book));
+    newCard.classList.add("card");
+    newCard.innerHTML = `
+    <div class="card-title">
+        <p class="book-title"><h2><em>"${book.title}"</em></h2></p>
+        <p>A book by ${book.author}<p>
+    </div>
+    <div class="card-info-container">
+        <p><strong>Title:</strong> "${book.title}"</p>
+        <p><strong>Author:</strong> ${book.author}</p>
+        <p><strong>Pages:</strong> ${book.pages} pages</p>
+    </div>
+    <div class="card-buttons-wrapper">
+        <button class="read-button ${book.setReadStatus()}" data-index=${myLibrary.indexOf(book)}></button>
+        <button class="delete-button" data-index=${myLibrary.indexOf(book)}><img src="images/delete.svg" alt="delete" height="25px"></button>
+    </div>`;
+    document.querySelector(".grid-container").appendChild(newCard);
 };
 
 function displayBooksToGrid() {
@@ -61,32 +83,47 @@ function showOrHideForm(form){
     };
 };
 
-function displayBookAsCard(book) {
-    let newCard = document.createElement("div");
-    newCard.setAttribute("data-index", myLibrary.indexOf(book));
-    newCard.classList.add("card");
-    newCard.innerHTML = `
-    <div class="card-title">
-        <p class="book-title"><h2><em>"${book.title}"</em></h2></p>
-        <p>A book by ${book.author}<p>
-    </div>
-    <div class="card-info-container">
-        <p><strong>Title:</strong> "${book.title}"</p>
-        <p><strong>Author:</strong> ${book.author}</p>
-        <p><strong>Pages:</strong> ${book.pages} pages</p>
-    </div>
-    <div class="card-buttons-wrapper">
-        <button class="read-button ${book.setReadStatus()}"></button>
-        <button class="delete-button" data-index=${myLibrary.indexOf(book)}><img src="images/delete.svg" alt="delete" height="25px"></button>
-    </div>`;
-    document.querySelector(".grid-container").appendChild(newCard);
+function deleteBook(index) {
+    myLibrary.splice(index, 1);
+    displayBooksToGrid();
+    deleteButtons = assignDeleteButtonsToIndex();
+    readButtons = assignReadButtonsToIndex();
 };
 
-// let book1 = new Book("48 laws of power", "R. Greene", 800, true);
-// let book2 = new Book("Mastery", "R. Greene", 700, false);
-// let book3 = new Book("Laws of human nature", "R. Greene", 500, true);
-// myLibrary.push(book1, book2, book3, book2, book3, book2, book3, book2, book3, book2, book3, book2, book3);
-// displayBooksToGrid();
+function assignDeleteButtonsToIndex() {
+    let deleteButtons = document.querySelectorAll(".delete-button")
+    deleteButtons.forEach(button => button.addEventListener("click", () => {
+    deleteBook(button.dataset.index);
+    }));
+    return deleteButtons;
+};
+
+function changeReadStatus(index, button) {
+    let currentBook = myLibrary[index];
+    if(currentBook.read===true) {
+        currentBook.read=false;
+        button.classList.remove("read");
+        button.classList.add("unread");
+    } else {
+        currentBook.read=true;
+        button.classList.add("read");
+        button.classList.remove("unread");
+    };
+};
+
+function assignReadButtonsToIndex() {
+    let readButtons = document.querySelectorAll(".read-button");
+    readButtons.forEach(button => button.addEventListener("click", () => {
+        changeReadStatus(button.dataset.index, button);
+    }));
+
+    return readButtons;
+};
+
+// for testing purposes
+let book1 = new Book("The 48 Laws Of Power", "R. Greene", 480, true);
+myLibrary.push(book1);
+displayBooksToGrid();
 
 let form = document.querySelector("form");
 let addBookButton = document.querySelector(".add-book-button");
@@ -97,21 +134,6 @@ submitNewBookButton.addEventListener("click", e => e.preventDefault());
 submitNewBookButton.addEventListener("click", () => addBookToLibrary());
 
 let deleteButtons = assignDeleteButtonsToIndex();
-
-function deleteBook(index) {
-    myLibrary.splice(index, 1);
-    displayBooksToGrid();
-    deleteButtons = assignDeleteButtonsToIndex();
-}
-
-function assignDeleteButtonsToIndex() {
-    let deleteButtons = document.querySelectorAll(".delete-button")
-    deleteButtons.forEach(button => button.addEventListener("click", () => {
-    deleteBook(button.dataset.index);
-    }))
-    return deleteButtons;
-}
-
-
+let readButtons = assignReadButtonsToIndex();
 
 

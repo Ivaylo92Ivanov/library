@@ -149,7 +149,7 @@ li {
     flex:1;
     border-radius: 12px;
     padding: 5px;
-    background-color: rgb(255, 66, 66);
+    background-color: var(--main-color-1, lightgray);
 }
 
 .read-button.unread:after {
