@@ -75,7 +75,7 @@ button {
 }
 
 form {
-    
+    width: 300px;
     display: none;
     margin: 1rem;
     transition: 0.3s;
@@ -180,4 +180,35 @@ a:hover {
     text-decoration: underline;
 }
 
+label {
+    display: flex;
+    flex-direction: column;
+}
+
+.title-error,
+.author-error,
+.pages-error {
+    background-color: rgb(218, 8, 8);
+    padding:0.1rem;
+    box-sizing: border-box;
+    border-radius: 0 0 5px 5px;
+    color: white;
+    visibility:hidden;
+}
+
+.active {
+    visibility: visible;
+}
+
+#pages:not(:placeholder-shown):not(:focus):invalid,
+#author:not(:placeholder-shown):not(:focus):invalid,
+#title:not(:placeholder-shown):not(:focus):invalid {
+    border-color: rgb(218, 8, 8);
+}
+
+#pages:focus:invalid,
+#author:invalid,
+#title:invalid {
+    outline-color: rgb(218, 8, 8);
+}
 

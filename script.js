@@ -1,12 +1,14 @@
 let myLibrary = [];
 
-function Book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
+class Book {
+    constructor(title, author, pages, read) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+    }
     
-    this.setReadStatus = function () {
+    setReadStatus = function () {
         if(this.read===true) {
             return "read";
         } else {
@@ -14,6 +16,7 @@ function Book(title, author, pages, read) {
         };
     };
 
+    
 };
 
 function getFormInfo() {
@@ -21,7 +24,6 @@ function getFormInfo() {
     let author = document.querySelector("#author").value;
     let pages = document.querySelector("#pages").value;
     let read = document.querySelector("#read").checked;
-    resetForm();
     return [title, author, pages, read];
 }
 
@@ -30,18 +32,6 @@ function resetForm() {
     form.style.display ="";
 }
 
-function addBookToLibrary(){
-    [title, author, pages, read] = getFormInfo();
-    if(title === "" || author === "" || pages ==="") {
-        alert("Please fill Title, Author and Pages fields");
-        return;
-    };
-    myLibrary.push(new Book (title, author, pages, read));
-    displayBooksToGrid();
-    deleteButtons = assignDeleteButtonsToIndex();
-    readButtons = assignReadButtonsToIndex();
-    return;
-};
 
 function displayBookAsCard(book) {
     let newCard = document.createElement("div");
@@ -130,10 +120,93 @@ let addBookButton = document.querySelector(".add-book-button");
 addBookButton.addEventListener("click", () => showOrHideForm(form));
 
 let submitNewBookButton = document.querySelector(".submit-button");
-submitNewBookButton.addEventListener("click", e => e.preventDefault());
-submitNewBookButton.addEventListener("click", () => addBookToLibrary());
+submitNewBookButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    addBookToLibrary();
+});
 
 let deleteButtons = assignDeleteButtonsToIndex();
 let readButtons = assignReadButtonsToIndex();
 
+
+function addBookToLibrary(){
+    [title, author, pages, read] = getFormInfo();
+    if (!validateForm(title, author, pages)) return;
+
+    resetForm();
+    myLibrary.push(new Book (title, author, pages, read));
+    displayBooksToGrid();
+    deleteButtons = assignDeleteButtonsToIndex();
+    readButtons = assignReadButtonsToIndex();
+    return;
+};
+
+function validateForm(title, author, pages) {
+    clearErrors();
+    let valid = true;
+    if(title === ""){
+        titleError.textContent = "Please fill in book title";
+        titleError.classList.add("active");
+        valid = false;
+    };
+    if(author === ""){
+        authorError.textContent= "Please fill in author name";
+        authorError.classList.add("active");
+        valid = false;
+    };
+    if(pages ===""){
+        pagesError.textContent= "Please add page count";
+        pagesError.classList.add("active");
+        valid = false;
+    } else if (pages <1) {
+        pagesError.classList.add("active")
+        pagesError.textContent = "Book must be at least 1 page long";
+        valid = false;
+    };
+    return valid;
+}
+
+function clearErrors() {
+    [titleError, authorError, pagesError].forEach((error) => {
+        error.classList.remove("active");
+        error.textContent = "";
+    });
+};
+
+let titleInput = document.querySelector("#title");
+let titleError = document.querySelector(".title-error");
+
+let authorInput = document.querySelector("#author");
+let authorError = document.querySelector(".author-error");
+
+let pagesInput = document.querySelector("#pages")
+let pagesError = document.querySelector(".pages-error");
+
+
+titleInput.addEventListener("input", () => {
+    if(!titleInput.validity.valid) {
+        titleError.classList.add("active");
+        titleInput.textContent = "Please fill in book title";
+    } else {
+        titleError.classList.remove("active")
+    }
+});
+
+authorInput.addEventListener("input", () => {
+    if(!authorInput.validity.valid) {
+        authorError.classList.add("active");
+        authorInput.textContent = "Please fill in book title";
+    } else {
+        authorError.classList.remove("active")
+    }
+});
+
+pagesInput.addEventListener("input", () => {
+    if(!pagesInput.validity.valid) {
+        pagesError.classList.add("active")
+        pagesError.textContent = "Book must be at least 1 page long"
+    } else {
+        pagesError.classList.remove("active");
+    } 
+});
 

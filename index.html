@@ -15,16 +15,33 @@
     <div class="main">
         <div class="add-book-button-container">
             <button class="add-book-button">+ Add Book</button>
-            <form>
+            <form novalidate>
                 <fieldset>
                     <legend><strong>Add Book</strong></legend>
                     <ul>
-                        <li><label for="title"><strong>Title:</strong></label></li>
-                        <li><input type="text" id="title" required></li>
-                        <li><label for="author"><strong>Author</strong>:</label></li>
-                        <li><input type="text" id="author" required></li>
-                        <li><label for="pages"><strong>Pages:</strong></label></li>
-                        <li><input type="number" min="0" id="pages" required></li>
+                        <li>
+                            <label for="title">
+                                <strong>Title:</strong>
+                                <input type="text" id="title" placeholder="Title" minlength="1" required>
+                                <span class="title-error">test error</span>
+                            </label>
+                        </li>
+                        
+                        <li>
+                            <label for="author">
+                                <strong>Author:</strong>
+                                <input type="text" id="author" placeholder="Author" required>
+                                <span class="author-error">test error</span>
+                            </label>
+                        </li>
+                        
+                        <li><label for="pages">
+                            <strong>Pages:</strong>
+                            <input type="number" min="1" id="pages" placeholder="Page count" required>
+                            <span class="pages-error"></span>
+                            </label>
+                        </li>
+                        
                         <li>
                             <label for="read"><strong>Read it yet?</strong></label>
                             <input type="checkbox" id="read">
@@ -36,7 +53,7 @@
         </div>
         <div class="grid-container">
             
-     </div>
+        </div>
     </div>
     <div class="footer">
         <a href="https://github.com/Ivaylo92Ivanov" target="blank">Created by Ivaylo I.</a>
